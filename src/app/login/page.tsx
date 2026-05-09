@@ -1,12 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const router = useRouter();
+
+  // Handle implicit-flow tokens that land in the URL hash (e.g. from admin-generated magic links)
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash.includes("access_token=")) return;
+    const params = new URLSearchParams(hash.slice(1));
+    const accessToken = params.get("access_token");
+    const refreshToken = params.get("refresh_token");
+    if (!accessToken || !refreshToken) return;
+    const supabase = createClient();
+    supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken }).then(({ error }) => {
+      if (!error) router.replace("/");
+    });
+  }, [router]);
 
   async function send(e: React.FormEvent) {
     e.preventDefault();
