@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#04341c"/>
+  <circle cx="256" cy="256" r="180" fill="#0b5c33" stroke="#d4af37" stroke-width="8"/>
+  <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central"
+    font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif"
+    font-size="200" font-weight="900" fill="#d4af37">♠</text>
+</svg>
